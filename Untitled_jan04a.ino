@@ -13,9 +13,8 @@ Formel som beräknar den absoluta luftfuktigheten utifrån den relativa luftfukt
 och temperaturen. Används av gassensornn för att förbättra dess noggranhet. 
 */
 uint32_t getAbsoluteHumidity(float temperature, float humidity) {
-  // approximation formula from Sensirion SGP30 Driver Integration chapter 3.15
   const float absoluteHumidity = 216.7f * ((humidity / 100.0f) * 6.112f * exp((17.62f * temperature) / (243.12f + temperature)) / (273.15f + temperature)); // [g/m^3]
-  const uint32_t absoluteHumidityScaled = static_cast<uint32_t>(1000.0f * absoluteHumidity); // [mg/m^3]
+  const uint32_t absoluteHumidityScaled = static_cast<uint32_t>(1000.0f * absoluteHumidity);
   return absoluteHumidityScaled;
 }
 
@@ -34,13 +33,8 @@ void setup() {
 
   bme.begin(0x77); // I2C adress
   sgp.begin();
-  
-  Serial.print("Found SGP30 serial #");
-  Serial.print(sgp.serialnumber[0], HEX);
-  Serial.print(sgp.serialnumber[1], HEX);
-  Serial.println(sgp.serialnumber[2], HEX);
-
 }
+
 int counter = 0;
 
 void loop() {
